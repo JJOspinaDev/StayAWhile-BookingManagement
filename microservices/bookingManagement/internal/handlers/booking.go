@@ -1,11 +1,12 @@
 package handlers
 
 import (
-	"encoding/json"
 	"net/http"
 	"stayawhile/microservices/bookingManagement/internal/handlers/dto"
 	"stayawhile/microservices/bookingManagement/internal/models"
 	"stayawhile/microservices/bookingManagement/internal/services"
+
+	"github.com/gin-gonic/gin"
 )
 
 type bookingHandler struct {
@@ -18,23 +19,20 @@ func NewBookingHandler(bookingService services.BookingService) *bookingHandler {
 	}
 }
 
-func (b *bookingHandler) CreateBooking(w http.ResponseWriter, r *http.Request) {
-
+func (b *bookingHandler) CreateBooking(c *gin.Context) {
 	var request dto.CreateBookingRequest
-	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-		// Manejar error de decodificación
-		http.Error(w, err.Error(), http.StatusBadRequest)
+	if err := c.ShouldBindJSON(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	/*	ClienteNombre: request.ClienteNombre,
-		ClienteEmail: request.ClienteEmail,
-		ClienteTelefono: request.ClienteTelefono,
-	*/
+	cliente := models.Cliente{
+		Nombre:   request.ClienteNombre,
+		Email:    request.ClienteEmail,
+		Telefono: request.ClienteTelefono,
+	}
 
 	reserva := models.Reserva{
-		//ClienteID: cliente.ID, // Suponiendo que se obtuvo o creó el cliente
-
 		HabitacionID:         request.HabitacionID,
 		FechaEntrada:         request.FechaEntrada,
 		FechaSalida:          request.FechaSalida,
@@ -43,12 +41,12 @@ func (b *bookingHandler) CreateBooking(w http.ResponseWriter, r *http.Request) {
 		TransporteAeropuerto: request.TransporteAeropuerto,
 	}
 
-	err := b.bookingService.CreateBooking(&reserva)
+	// Aquí asumimos que CreateBooking manejará la lógica de buscar o crear el cliente
+	err := b.bookingService.CreateBooking(&reserva, &cliente)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	c.JSON(http.StatusCreated, reserva)
 }

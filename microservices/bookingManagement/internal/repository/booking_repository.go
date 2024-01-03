@@ -9,7 +9,7 @@ import (
 type BookingRepository interface {
 	Begin() (*sql.Tx, error)
 	Save(tx *sql.Tx, booking *models.Reserva) error
-	CheckRoomAvailability(tx *sql.Tx, habitacionID string, fechaEntrada, fechaSalida time.Time) (bool, error)
+	CheckRoomAvailability(tx *sql.Tx, habitacionID int64, fechaEntrada, fechaSalida time.Time) (bool, error)
 }
 
 type bookingRepository struct {
@@ -21,7 +21,7 @@ func NewBookingRepository(db *sql.DB) BookingRepository {
 }
 
 func (r *bookingRepository) Begin() (*sql.Tx, error) {
-    return r.db.Begin()
+	return r.db.Begin()
 }
 
 func (r *bookingRepository) Save(tx *sql.Tx, booking *models.Reserva) error {
@@ -50,7 +50,7 @@ func (r *bookingRepository) Save(tx *sql.Tx, booking *models.Reserva) error {
 	return nil
 }
 
-func (r *bookingRepository) CheckRoomAvailability(tx *sql.Tx, habitacionID string, fechaEntrada, fechaSalida time.Time) (bool, error) {
+func (r *bookingRepository) CheckRoomAvailability(tx *sql.Tx, habitacionID int64, fechaEntrada, fechaSalida time.Time) (bool, error) {
 	var count int
 	query := `
         SELECT COUNT(*)
