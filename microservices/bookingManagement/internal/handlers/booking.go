@@ -5,8 +5,13 @@ import (
 	"stayawhile/microservices/bookingManagement/internal/handlers/dto"
 	"stayawhile/microservices/bookingManagement/internal/models"
 	"stayawhile/microservices/bookingManagement/internal/services"
+	"time"
 
 	"github.com/gin-gonic/gin"
+)
+
+const (
+	DateFormat = "2006-01-02"
 )
 
 type bookingHandler struct {
@@ -32,17 +37,30 @@ func (b *bookingHandler) CreateBooking(c *gin.Context) {
 		Telefono: request.ClienteTelefono,
 	}
 
+	// Parsear las cadenas de fecha a time.Time utilizando la constante DateFormat
+	fechaEntrada, err := time.Parse(DateFormat, request.FechaEntrada)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Error al parsear la fecha de entrada"})
+		return
+	}
+
+	fechaSalida, err := time.Parse(DateFormat, request.FechaSalida)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Error al parsear la fecha de salida"})
+		return
+	}
+
 	reserva := models.Reserva{
 		HabitacionID:         request.HabitacionID,
-		FechaEntrada:         request.FechaEntrada,
-		FechaSalida:          request.FechaSalida,
+		FechaEntrada:         fechaEntrada,
+		FechaSalida:          fechaSalida,
 		DesayunoIncluido:     request.DesayunoIncluido,
 		CamaExtra:            request.CamaExtra,
 		TransporteAeropuerto: request.TransporteAeropuerto,
 	}
 
 	// Aquí asumimos que CreateBooking manejará la lógica de buscar o crear el cliente
-	err := b.bookingService.CreateBooking(&reserva, &cliente)
+	err = b.bookingService.CreateBooking(&reserva, &cliente)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

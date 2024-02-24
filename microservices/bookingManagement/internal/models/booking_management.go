@@ -1,8 +1,6 @@
 package models
 
-import (
-	"time"
-)
+import "time"
 
 // Cliente representa la información del cliente que realiza la reserva.
 type Cliente struct {

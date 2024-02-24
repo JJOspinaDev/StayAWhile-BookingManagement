@@ -1,14 +1,17 @@
 package main
 
 import (
-	"stayawhile/microservices/bookingManagement/api"
 	"database/sql"
+	"stayawhile/microservices/bookingManagement/api"
+
+	_ "github.com/go-sql-driver/mysql"
+
 	"log"
 )
 
 func main() {
 	// Configurar la conexión a la base de datos
-	db, err := sql.Open("mysql", "username:password@tcp(localhost:3306)/dbname")
+	db, err := sql.Open("mysql", "root:mipassword@tcp(localhost:3307)/miBaseDeDatos")
 	if err != nil {
 		log.Fatal("Error al conectar a la base de datos:", err)
 	}

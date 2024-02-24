@@ -2,6 +2,7 @@ package services
 
 import (
 	"database/sql"
+	"fmt"
 	"stayawhile/microservices/bookingManagement/internal/models"
 	"stayawhile/microservices/bookingManagement/internal/repository"
 )
@@ -25,6 +26,8 @@ func NewBookingService(bookingRepo repository.BookingRepository, clientRepo repo
 
 func (s *bookingService) CreateBooking(booking *models.Reserva, clienteInfo *models.Cliente) error {
 	// Iniciar transacción
+
+	fmt.Println("Hjsjdj")
 	tx, err := s.bookingRepo.Begin()
 	if err != nil {
 		return err
