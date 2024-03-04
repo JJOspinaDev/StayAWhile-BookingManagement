@@ -23,7 +23,14 @@ func SetupRouter(db *sql.DB) *gin.Engine {
 	{
 		// Ruta para crear una reserva
 		app.POST("/", bookingHandler.CreateBooking)
+		// Ruta para obtener detalles de una reserva específica por ID
+		app.GET("/reservas", bookingHandler.GetAllBookings)
+		// Ruta para actualizar una reserva existente por ID
+		//app.PUT("/reservas/:id", bookingHandler.UpdateBookingByID)
+		// Ruta para cancelar una reserva por ID
+		//app.DELETE("/reservas/:id", bookingHandler.DeleteBookingByID)
 	}
-
 	return router
+
 }
+

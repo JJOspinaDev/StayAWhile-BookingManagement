@@ -59,5 +59,5 @@ INSERT INTO habitaciones (tipo, descripcion, precioPorNoche) VALUES
 -- Insertar datos de prueba para reservas
 INSERT INTO reservas (clienteId, habitacionId, fechaEntrada, fechaSalida, numeroNoches, costoTotal, estado, desayunoIncluido, camaExtra, transporteAeropuerto, notas, fechaCreacion, fechaActualizacion) VALUES 
 (1, 1, '2023-01-01', '2023-01-03', 2, 100.00, 'Confirmada', TRUE, FALSE, FALSE, 'Sin notas', NOW(), NOW()),
-(2, 2, '2023-01-05', '2023-01-10', 5, 350.00, 'Confirmada', TRUE, TRUE, TRUE, 'Requiere transporte aeropuerto', NOW(), NOW()),
+(2, 2, '2023-01-05', '2023-01-10', 5, 350.00, 'Confirmada', TRUE, TRUE, TRUE, 'Requiere transporte aeropuerto', NOW(), NOW());
 -- Añadir más reservas hasta llegar a 13...

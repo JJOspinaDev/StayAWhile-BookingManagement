@@ -10,6 +10,7 @@ import (
 // BookingService define las operaciones disponibles para los bookingos.
 type BookingService interface {
 	CreateBooking(booking *models.Reserva, clienteInfo *models.Cliente) error
+	GetBookingsWithFilters(filtros map[string]interface{}) ([]models.Reserva, error)
 }
 
 type bookingService struct {
@@ -68,4 +69,13 @@ func (s *bookingService) CreateBooking(booking *models.Reserva, clienteInfo *mod
 
 	// Si todo va bien, hacer commit de la transacción
 	return tx.Commit()
+}
+
+func (s *bookingService) GetBookingsWithFilters(filtros map[string]interface{}) ([]models.Reserva, error) {
+    reservas, err := s.bookingRepo.GetBookingsWithFilters(filtros)
+    if err != nil {
+        return nil, err
+    }
+    // Aquí puedes agregar cualquier lógica de negocio adicional antes de devolver las reservas
+    return reservas, nil
 }
