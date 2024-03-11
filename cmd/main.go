@@ -2,7 +2,7 @@ package main
 
 import (
 	"database/sql"
-	"stayawhile/microservices/bookingManagement/api"
+	"stayawhile/api"
 
 	_ "github.com/go-sql-driver/mysql"
 

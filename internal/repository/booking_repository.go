@@ -3,7 +3,7 @@ package repository
 import (
 	"database/sql"
 	"fmt"
-	"stayawhile/microservices/bookingManagement/internal/models"
+	"stayawhile/internal/models"
 	"strings"
 	"time"
 )

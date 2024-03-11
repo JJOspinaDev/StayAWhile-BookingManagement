@@ -2,7 +2,7 @@ package repository
 
 import (
 	"database/sql"
-	"stayawhile/microservices/bookingManagement/internal/models"
+	"stayawhile/internal/models"
 )
 
 type ClientRepository interface {

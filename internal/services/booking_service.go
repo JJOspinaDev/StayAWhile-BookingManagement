@@ -3,8 +3,8 @@ package services
 import (
 	"database/sql"
 	"fmt"
-	"stayawhile/microservices/bookingManagement/internal/models"
-	"stayawhile/microservices/bookingManagement/internal/repository"
+	"stayawhile/internal/models"
+	"stayawhile/internal/repository"
 )
 
 // BookingService define las operaciones disponibles para los bookingos.
@@ -72,10 +72,10 @@ func (s *bookingService) CreateBooking(booking *models.Reserva, clienteInfo *mod
 }
 
 func (s *bookingService) GetBookingsWithFilters(filtros map[string]interface{}) ([]models.Reserva, error) {
-    reservas, err := s.bookingRepo.GetBookingsWithFilters(filtros)
-    if err != nil {
-        return nil, err
-    }
-    // Aquí puedes agregar cualquier lógica de negocio adicional antes de devolver las reservas
-    return reservas, nil
+	reservas, err := s.bookingRepo.GetBookingsWithFilters(filtros)
+	if err != nil {
+		return nil, err
+	}
+	// Aquí puedes agregar cualquier lógica de negocio adicional antes de devolver las reservas
+	return reservas, nil
 }

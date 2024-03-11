@@ -2,9 +2,9 @@ package api
 
 import (
 	"database/sql"
-	"stayawhile/microservices/bookingManagement/internal/handlers"
-	"stayawhile/microservices/bookingManagement/internal/repository"
-	"stayawhile/microservices/bookingManagement/internal/services"
+	"stayawhile/internal/handlers"
+	"stayawhile/internal/repository"
+	"stayawhile/internal/services"
 
 	"github.com/gin-gonic/gin"
 )
@@ -33,4 +33,3 @@ func SetupRouter(db *sql.DB) *gin.Engine {
 	return router
 
 }
-
